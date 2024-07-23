@@ -5,8 +5,8 @@
 </template>
 <script>
 export default {
-  name: 'appFooter'
-}
+  name: 'AppFooter'
+};
 </script>
 <style lang="scss" scoped>
 .footer {
@@ -15,9 +15,9 @@ export default {
   justify-content: center;
   width: 100%;
   height: 200px;
-  position: absolute;
+  position: relative;
   bottom: 0;
-  color: #fcba03;
+  color: $tertiary;
   background-color: $primary;
   border-top: 4px solid #111;
 }

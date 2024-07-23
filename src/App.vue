@@ -1,11 +1,11 @@
 <template>
-  <navBar :logo="logo" :alt="alt" />
+  <navBar />
   <router-view />
   <appFooter />
 </template>
 <script>
-import navBar from './components/navBar.vue'
-import appFooter from './components/appFooter.vue'
+import navBar from './components/navBar.vue';
+import appFooter from './components/appFooter.vue';
 
 export default {
   name: 'App',
@@ -14,12 +14,9 @@ export default {
     appFooter
   },
   data() {
-    return {
-      logo: '/images/logo.png',
-      alt: 'Make your burger'
-    }
+    return {};
   }
-}
+};
 </script>
 <style lang="scss">
 .main-container {
