@@ -119,12 +119,17 @@ export default {
 
     async createBurger(e) {
       e.preventDefault();
+      const res = await fetch('http://localhost:3000/burgers');
+      const burgers = await res.json();
+      const lastId = burgers.length ? burgers[burgers.length - 1].id : 0;
+      const newId = lastId + 1;
 
       const data = {
-        name : this.name,
+        id: newId,  // Definindo o ID manualmente
+        name: this.name,
         carne: this.carne,
         pao: this.pao,
-        opcionais: Array.from(this.opacionais),
+        opcionais: Array.from(this.opcionais),
         status: 'Solicitado'
       };
 
@@ -132,13 +137,15 @@ export default {
 
       const req = await fetch('http://localhost:3000/burgers', {
         method: 'POST',
-        headers: {'Content-type': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
         body: dataJson
       });
 
-      const res = await req.json();
+      const result = await req.json();
 
-      this.msg = `Pedido Nº ${res.id} realizado com sucesso`;
+      console.log(result);
+
+      this.msg = `Pedido Nº ${newId} realizado com sucesso`;
 
       setTimeout(() => {
         this.msg = '';
@@ -147,7 +154,7 @@ export default {
       this.name = '',
       this.carne = '',
       this.pao = '',
-      this.opacionais = '';
+      this.opcionais = '';
     }
   },
   mounted() {
@@ -158,70 +165,70 @@ export default {
 
 <style lang="scss" scoped>
 .form {
-	max-width: 400px;
-	margin: 0 auto;
+  max-width: 400px;
+  margin: 0 auto;
 
-	&__c-input {
-		display: flex;
-		flex-direction: column;
-		margin-bottom: 20px;
+  &__c-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
 
-		label {
-			font-weight: bold;
-			color: $primary;
-			border-left: 4px solid $tertiary;
-			margin-bottom: 15px;
-			padding: 5px 10px;
-		}
+    label {
+      font-weight: bold;
+      color: $primary;
+      border-left: 4px solid $tertiary;
+      margin-bottom: 15px;
+      padding: 5px 10px;
+    }
 
-		input,
-		select {
-			width: 300px;
-			padding: 5px 10px;
-		}
+    input,
+    select {
+      width: 300px;
+      padding: 5px 10px;
+    }
 
-		&__c-checkbox {
-			display: flex;
-			align-items: flex-start;
-			width: 50%;
-			margin-bottom: 20px;
+    &__c-checkbox {
+      display: flex;
+      align-items: flex-start;
+      width: 50%;
+      margin-bottom: 20px;
 
-			span,
-			input {
-				width: auto;
-			}
+      span,
+      input {
+        width: auto;
+      }
 
-			span {
-				margin-left: 6px;
-				font-weight: bold;
-			}
-		}
+      span {
+        margin-left: 6px;
+        font-weight: bold;
+      }
+    }
 
-		&__button {
-			font-size: 16px;
-			font-weight: bold;
-			color: $tertiary;
-			background-color: $primary;
-			border: 2px solid $primary;
-			padding: 10px;
-			cursor: pointer;
-			transition: 0.5s;
+    &__button {
+      font-size: 16px;
+      font-weight: bold;
+      color: $tertiary;
+      background-color: $primary;
+      border: 2px solid $primary;
+      padding: 10px;
+      cursor: pointer;
+      transition: 0.5s;
 
-			&:hover {
-				background-color: transparent;
-				color: $primary;
-			}
-		}
-	}
+      &:hover {
+        background-color: transparent;
+        color: $primary;
+      }
+    }
+  }
 
-	#opcionais-container {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
+  #opcionais-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-		label {
-			width: 100%;
-		}
-	}
+    label {
+      width: 100%;
+    }
+  }
 }
 </style>
