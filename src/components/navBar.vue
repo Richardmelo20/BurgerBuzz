@@ -17,7 +17,7 @@
       Home
     </router-link>
     <router-link
-      to="/ordersList"
+      to="/pedidos"
       class="heading__links"
     >
       Pedidos

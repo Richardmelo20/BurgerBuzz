@@ -10,7 +10,7 @@ const router = createRouter({
       component: home
     },
     {
-      path: '/pedidis',
+      path: '/pedidos',
       name: 'pedidos',
       component: () => import(/*webpackChunkName: "pedidos" */ '../views/pedidos.vue')
     }
