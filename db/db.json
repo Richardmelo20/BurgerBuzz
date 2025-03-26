@@ -65,30 +65,29 @@
   },
   "status": [
     {
-      "id": "1",
+      "id": 1,
       "tipo": "Solicitado"
     },
     {
-      "id": "2",
+      "id": 2,
       "tipo": "Em produção"
     },
     {
-      "id": "3",
+      "id": 3,
       "tipo": "Finalizado"
     }
   ],
   "burgers": [
     {
-      "id": 1,
-      "name": "Richard",
+      "name": "Jose",
       "carne": "Alcatra",
-      "pao": "3 Queijos",
+      "pao": "Italiano Branco",
       "opcionais": [
-        "Cheddar",
-        "Tomate",
-        "Pepino"
+        "Bacon",
+        "Cheddar"
       ],
-      "status": "Solicitado"
+      "status": "Finalizado",
+      "id": 1
     }
   ]
 }

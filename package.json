@@ -9,11 +9,12 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "backend": "json-server --watch db/db.json"
+    "backend": "json-server --watch db/db.json",
+    "start": "node server.js"
   },
   "dependencies": {
     "json-serve": "^0.1.0",
-    "json-server": "^1.0.0-beta.1",
+    "uuid": "^11.0.3",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
