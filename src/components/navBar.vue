@@ -29,7 +29,7 @@ export default {
   name: 'NavBar',
   data() {
     return {
-      logo: '/images/logo.png',
+      logo: './images/logo.png',
       alt: 'Make your burger'
     };
   }

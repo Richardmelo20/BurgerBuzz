@@ -78,16 +78,6 @@
     }
   ],
   "burgers": [
-    {
-      "name": "Jose",
-      "carne": "Alcatra",
-      "pao": "Italiano Branco",
-      "opcionais": [
-        "Bacon",
-        "Cheddar"
-      ],
-      "status": "Finalizado",
-      "id": 1
-    }
+    
   ]
 }
