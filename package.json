@@ -18,7 +18,7 @@
   "dependencies": {
     "json-serve": "^0.1.0",
     "uuid": "^11.0.3",
-    "vue": "^3.4.29",
+    "vue": "^3.5.13",
     "vue-router": "^4.3.3"
   },
   "devDependencies": {
