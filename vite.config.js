@@ -12,7 +12,10 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: '/BurgerBuzz',
+  base: '/BurgerBuzz/', // Ajuste conforme o nome do repositório
+  build: {
+    outDir: 'dist',
+  },
   // css: ['./assets/scss/_global.scss'],
   css: {
     preprocessorOptions: {
