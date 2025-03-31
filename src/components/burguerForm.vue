@@ -138,15 +138,19 @@ export default {
       const res = await req.json();
   
       this.msg = `Pedido Nº ${res.id} realizado com sucesso`;
+      console.log('Mensagem definida:', this.msg);
 
       setTimeout(() => {
         this.msg = '';
       }, 3000);
 
-      this.name = '',
-      this.carne = '',
-      this.pao = '',
+      this.name = '';
+      this.carne = '';
+      this.pao = '';
       this.opcionais = [];
+
+      console.log('Campos resetados:', this.name, this.carne, this.pao, this.opcionais);
+
     }
   },
   mounted() {
