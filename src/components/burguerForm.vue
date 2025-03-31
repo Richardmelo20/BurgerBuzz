@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     async getIngredientes() {
-      const req = await fetch('https://burger-buzz.vercel.app/ingredientes');
+      const req = await fetch('https://burger-buzz-api.vercel.app/ingredientes');
       const data = await req.json();
 
       this.paes = data.paes; 
@@ -129,7 +129,7 @@ export default {
 
       const dataJson = JSON.stringify(data);
 
-      const req = await fetch('https://burger-buzz.vercel.app/burgers', {
+      const req = await fetch('https://burger-buzz-api.vercel.app/burgers', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: dataJson
