@@ -93,6 +93,13 @@ export default {
     async createBurger(e) {
       e.preventDefault();
 
+      // Validação dos campos obrigatórios
+      if (!this.name || !this.pao || !this.carne) {
+        this.msg = 'Por favor, preencha todos os campos obrigatórios!';
+        setTimeout(() => (this.msg = ''), 3000);
+        return;
+      }
+
       const data = {
         name: this.name,
         carne: this.carne,
