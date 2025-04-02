@@ -92,10 +92,10 @@ export default {
       e.preventDefault();
 
       const data = {
-        name: this.name || 'Sem nome', // Garante que não seja null/undefined
-        carne: this.carne || 'Sem carne',
-        pao: this.pao || 'Sem pão',
-        opcionais: this.opcionais.length > 0 ? this.opcionais.join(', ') : 'Nenhum', // Transforma array em string
+        name: this.name,
+        carne: this.carne,
+        pao: this.pao,
+        opcionais: this.opcionais, // Não precisa do `Array.from()`
         status: 'Solicitado'
       };
 
