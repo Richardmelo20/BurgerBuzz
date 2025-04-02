@@ -1,8 +1,0 @@
-{
-  "name": "burgerbuzz-backend",
-  "version": "1.0.0",
-  "main": "server.js",
-  "dependencies": {
-    "json-server": "^0.17.0"
-  }
-}

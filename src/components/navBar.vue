@@ -1,27 +1,10 @@
 <template>
   <header class="heading">
-    <router-link
-      to="/"
-      class="heading__logo-container"
-    >
-      <img
-        :src="logo"
-        :alt="alt"
-        class="heading__logo-container__logo"
-      >
+    <router-link to="/" class="heading__logo-container">
+      <img :src="logo" :alt="alt" class="heading__logo-container__logo" />
     </router-link>
-    <router-link
-      to="/"
-      class="heading__links"
-    >
-      Home
-    </router-link>
-    <router-link
-      to="/pedidos"
-      class="heading__links"
-    >
-      Pedidos
-    </router-link>
+    <router-link to="/" class="heading__links"> Home </router-link>
+    <router-link to="/pedidos" class="heading__links"> Pedidos </router-link>
   </header>
 </template>
 <script>
