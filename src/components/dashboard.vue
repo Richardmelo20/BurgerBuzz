@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <message :msg="msg" v-show="msg" />
+    <message v-show="msg" :msg="msg" />
     <div>
       <div class="table__heading">
         <div class="table__heading__order-id">#</div>
@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="table__rows">
-      <div class="table__rows__row" v-for="burger in burgers" :key="burger.id">
+      <div v-for="burger in burgers" :key="burger.id" class="table__rows__row">
         <div class="table__rows__row__order-number">
           {{ burger.id }}
         </div>
@@ -53,8 +53,13 @@
 
 <script>
 import Message from './message.vue';
+
 export default {
   name: 'Dashboard',
+  components: {
+    Message
+  },
+
   data() {
     return {
       burgers: null,
@@ -63,9 +68,11 @@ export default {
       msg: null
     };
   },
-  components: {
-    Message
+
+  mounted() {
+    this.getPedidos();
   },
+
   methods: {
     async getPedidos() {
       const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/burgers/');
@@ -117,10 +124,6 @@ export default {
         this.msg = '';
       }, 3000);
     }
-  },
-
-  mounted() {
-    this.getPedidos();
   }
 };
 </script>

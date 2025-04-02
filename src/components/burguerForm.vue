@@ -46,11 +46,13 @@
 
 <script>
 import message from './message.vue';
+
 export default {
   name: 'BurguerForm',
   components: {
     message
   },
+
   data() {
     return {
       paes: null,
@@ -63,6 +65,7 @@ export default {
       msg: null
     };
   },
+
   mounted() {
     this.getIngredientes();
   },
