@@ -108,12 +108,22 @@ export default {
   },
   methods: {
     async getIngredientes() {
-      const req = await fetch('https://burger-buzz-api.vercel.app/ingredientes');
-      const data = await req.json();
+      try {
+        const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/ingredientes');
+        
+        if (!req.ok) {
+          throw new Error(`Erro na requisição: ${req.status} ${req.statusText}`);
+        }
 
-      this.paes = data.paes; 
-      this.carnes = data.carnes;
-      this.opcionaisdata = data.opcionais;
+        const data = await req.json();
+        console.log('Dados recebidos:', data);
+
+        this.paes = data.paes; 
+        this.carnes = data.carnes;
+        this.opcionaisdata = data.opcionais;
+      } catch (error) {
+        console.error('Erro ao buscar ingredientes:', error);
+      }
     },
 
     async createBurger(e) {
@@ -129,7 +139,7 @@ export default {
 
       const dataJson = JSON.stringify(data);
 
-      const req = await fetch('https://burger-buzz-api.vercel.app/burgers', {
+      const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/burgers', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: dataJson

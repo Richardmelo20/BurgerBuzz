@@ -101,19 +101,19 @@ export default {
   },
   methods: {
     async getPedidos() {
-      const req = await fetch('https://burger-buzz-api.vercel.app/burgers/');
+      const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/burgers/');
       const data = await req.json();
       this.burgers = data;
 
       this.getStatus();
     },
     async getStatus() {
-      const req = await fetch('https://burger-buzz-api.vercel.app/status');
+      const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/status');
       const data = await req.json();
       this.status = data;
     },
     async deleteBurger(id) {
-      const req = await fetch(`https://burger-buzz-api.vercel.app/burgers/${id}`, {
+      const req = await fetch(`https://67ed707f4387d9117bbda35a.mockapi.io/burgers/${id}`, {
         method: 'DELETE'
       });
 
@@ -136,7 +136,7 @@ export default {
 
       const dataJson = JSON.stringify({ status: option });
 
-      const req = await fetch(`https://burger-buzz-api.vercel.app/burgers/${id}`, {
+      const req = await fetch(`https://67ed707f4387d9117bbda35a.mockapi.io/burgers/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: dataJson
