@@ -1,86 +1,43 @@
 <template>
   <div>
-    <message
-      :msg="msg"
-      v-show="msg"
-    />
+    <message v-show="msg" :msg="msg" />
     <div>
-      <form
-        class="form"
-        @submit="createBurger"
-      >
+      <form class="form" @submit="createBurger">
         <div class="form__c-input">
           <label for="name">Nome do cliente:</label>
-          <input
-            id="name"
-            v-model="name"
-            type="text"
-            placeholder="Digite o seu nome"
-          >
+          <input id="name" v-model="name" type="text" placeholder="Digite o seu nome" />
         </div>
         <div class="form__c-input">
           <label for="pao">Escolha o pão:</label>
-          <select
-            id="pao"
-            v-model="pao"
-            name="pao"
-          >
-            <option value="">
-              Selecione o seu pão
-            </option>
-            <option
-              v-for="select in paes"
-              :key="select.id"
-              :value="select.tipo"
-            >
+          <select id="pao" v-model="pao" name="pao">
+            <option value="">Selecione o seu pão</option>
+            <option v-for="select in paes" :key="select.id" :value="select.tipo">
               {{ select.tipo }}
             </option>
           </select>
         </div>
         <div class="form__c-input">
           <label for="carne">Escolha a carne do seu Burger:</label>
-          <select
-            id="carne"
-            v-model="carne"
-            name="carne"
-          >
-            <option value="">
-              Selecione o tipo de carne
-            </option>
-            <option
-              v-for="select in carnes"
-              :key="select.id"
-              :value="select.tipo"
-            >
+          <select id="carne" v-model="carne" name="carne">
+            <option value="">Selecione o tipo de carne</option>
+            <option v-for="select in carnes" :key="select.id" :value="select.tipo">
               {{ select.tipo }}
             </option>
           </select>
         </div>
-        <div
-          id="opcionais-container"
-          class="form__c-input"
-        >
+        <div id="opcionais-container" class="form__c-input">
           <label for="opcionais">Selecione os opcionais:</label>
           <div
             v-for="opcional in opcionaisdata"
             :key="opcional.id"
             class="form__c-input__c-checkbox"
           >
-            <input
-              v-model="opcionais"
-              type="checkbox"
-              name="opcionais"
-              :value="opcional.tipo"
-            >
+            <input v-model="opcionais" type="checkbox" name="opcionais" :value="opcional.tipo" />
             <span>{{ opcional.tipo }}</span>
           </div>
         </div>
         <div class="form__c-input">
-          <input
-            type="submit"
-            class="form__c-input__button"
-            value="Criar meu Burger!"
-          >
+          <input type="submit" class="form__c-input__button" value="Criar meu Burger!" />
         </div>
       </form>
     </div>
@@ -106,6 +63,10 @@ export default {
       msg: null
     };
   },
+  mounted() {
+    this.getIngredientes();
+  },
+
   methods: {
     async getIngredientes() {
       try {
@@ -119,9 +80,9 @@ export default {
         console.log('Dados recebidos:', data);
 
         // Filtrando ingredientes por categoria
-        this.paes = data.filter(item => item.categoria === 'pao');
-        this.carnes = data.filter(item => item.categoria === 'carne');
-        this.opcionaisdata = data.filter(item => item.categoria === 'opcional');
+        this.paes = data.filter((item) => item.categoria === 'pao');
+        this.carnes = data.filter((item) => item.categoria === 'carne');
+        this.opcionaisdata = data.filter((item) => item.categoria === 'opcional');
       } catch (error) {
         console.error('Erro ao buscar ingredientes:', error);
       }
@@ -131,10 +92,10 @@ export default {
       e.preventDefault();
 
       const data = {
-        name: this.name,
-        carne: this.carne,
-        pao: this.pao,
-        opcionais: this.opcionais,  // Não precisa do `Array.from()`
+        name: this.name || 'Sem nome', // Garante que não seja null/undefined
+        carne: this.carne || 'Sem carne',
+        pao: this.pao || 'Sem pão',
+        opcionais: this.opcionais.length > 0 ? this.opcionais.join(', ') : 'Nenhum', // Transforma array em string
         status: 'Solicitado'
       };
 
@@ -168,81 +129,76 @@ export default {
         console.error('Erro ao criar burger:', error);
       }
     }
-  },
-
-  mounted() {
-    this.getIngredientes();
   }
-
 };
 </script>
 
 <style lang="scss" scoped>
-  .form {
-    max-width: 400px;
-    margin: 0 auto;
+.form {
+  max-width: 400px;
+  margin: 0 auto;
 
-    &__c-input {
+  &__c-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    label {
+      font-weight: bold;
+      color: $primary;
+      border-left: 4px solid $tertiary;
+      margin-bottom: 15px;
+      padding: 5px 10px;
+    }
+
+    input,
+    select {
+      width: 300px;
+      padding: 5px 10px;
+    }
+
+    &__c-checkbox {
       display: flex;
-      flex-direction: column;
+      align-items: flex-start;
+      width: 50%;
       margin-bottom: 20px;
 
-      label {
+      span,
+      input {
+        width: auto;
+      }
+
+      span {
+        margin-left: 6px;
         font-weight: bold;
-        color: $primary;
-        border-left: 4px solid $tertiary;
-        margin-bottom: 15px;
-        padding: 5px 10px;
-      }
-
-      input,
-      select {
-        width: 300px;
-        padding: 5px 10px;
-      }
-
-      &__c-checkbox {
-        display: flex;
-        align-items: flex-start;
-        width: 50%;
-        margin-bottom: 20px;
-
-        span,
-        input {
-          width: auto;
-        }
-
-        span {
-          margin-left: 6px;
-          font-weight: bold;
-        }
-      }
-
-      &__button {
-        font-size: 16px;
-        font-weight: bold;
-        color: $tertiary;
-        background-color: $primary;
-        border: 2px solid $primary;
-        padding: 10px;
-        cursor: pointer;
-        transition: 0.5s;
-
-        &:hover {
-          background-color: transparent;
-          color: $primary;
-        }
       }
     }
 
-    #opcionais-container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+    &__button {
+      font-size: 16px;
+      font-weight: bold;
+      color: $tertiary;
+      background-color: $primary;
+      border: 2px solid $primary;
+      padding: 10px;
+      cursor: pointer;
+      transition: 0.5s;
 
-      label {
-        width: 100%;
+      &:hover {
+        background-color: transparent;
+        color: $primary;
       }
     }
   }
+
+  #opcionais-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    label {
+      width: 100%;
+    }
+  }
+}
 </style>

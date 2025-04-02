@@ -1,8 +1,6 @@
 <template>
   <div class="container-banner">
-    <h1 class="container-banner__title">
-      Make Your Burger
-    </h1>
+    <h1 class="container-banner__title">Make Your Burger</h1>
   </div>
 </template>
 <script>

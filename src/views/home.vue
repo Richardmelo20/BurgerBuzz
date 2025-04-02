@@ -1,9 +1,7 @@
 <template>
   <Banner />
   <div class="main-container">
-    <h1 class="main-container__title">
-      Monte o seu burger:
-    </h1>
+    <h1 class="main-container__title">Monte o seu burger:</h1>
     <BurguerForm />
   </div>
 </template>

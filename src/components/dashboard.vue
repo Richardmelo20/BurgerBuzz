@@ -1,37 +1,18 @@
 <template>
   <div class="table">
-    <message
-      :msg="msg"
-      v-show="msg"
-    />
+    <message :msg="msg" v-show="msg" />
     <div>
       <div class="table__heading">
-        <div class="table__heading__order-id">
-          #
-        </div>
-        <div class="product">
-          Cliente:
-        </div>
-        <div class="product">
-          Pão:
-        </div>
-        <div class="product">
-          Carne:
-        </div>
-        <div class="product">
-          Opcionais:
-        </div>
-        <div class="product">
-          Ações:
-        </div>
+        <div class="table__heading__order-id">#</div>
+        <div class="product">Cliente:</div>
+        <div class="product">Pão:</div>
+        <div class="product">Carne:</div>
+        <div class="product">Opcionais:</div>
+        <div class="product">Ações:</div>
       </div>
     </div>
     <div class="table__rows">
-      <div
-        class="table__rows__row"
-        v-for="burger in burgers"
-        :key="burger.id"
-      >
+      <div class="table__rows__row" v-for="burger in burgers" :key="burger.id">
         <div class="table__rows__row__order-number">
           {{ burger.id }}
         </div>
@@ -46,23 +27,14 @@
         </div>
         <div class="product">
           <ul>
-            <li
-              v-for="(option, idx) in burger.opcionais"
-              :key="idx"
-            >
+            <li v-for="(option, idx) in burger.opcionais" :key="idx">
               {{ option }}
             </li>
           </ul>
         </div>
         <div class="product">
-          <select
-            name="status"
-            class="table__status"
-            @change="updateBurger($event, burger.id)"
-          >
-            <option value="">
-              Selecionar
-            </option>
+          <select name="status" class="table__status" @change="updateBurger($event, burger.id)">
+            <option value="">Selecionar</option>
             <option
               v-for="s in status"
               :key="s.id"
@@ -72,12 +44,7 @@
               {{ s.tipo }}
             </option>
           </select>
-          <button
-            class="table__button"
-            @click="deleteBurger(burger.id)"
-          >
-            Cancelar
-          </button>
+          <button class="table__button" @click="deleteBurger(burger.id)">Cancelar</button>
         </div>
       </div>
     </div>
@@ -120,7 +87,6 @@ export default {
       const res = await req.json();
 
       console.log(res);
-      
 
       this.msg = 'Pedido removido com sucesso';
 
@@ -129,8 +95,7 @@ export default {
       }, 3000);
 
       this.getPedidos();
-    }
-    ,
+    },
     async updateBurger(event, id) {
       const option = event.target.value;
 
@@ -156,66 +121,66 @@ export default {
 
   mounted() {
     this.getPedidos();
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-  .table {
-    max-width: 1200px;
-    margin: 0 auto;
+.table {
+  max-width: 1200px;
+  margin: 0 auto;
 
-    &__rows,
-    &__heading,
-    &__rows__row {
-      display: flex;
-      flex-wrap: wrap;
+  &__rows,
+  &__heading,
+  &__rows__row {
+    display: flex;
+    flex-wrap: wrap;
 
-      &__row {
-        width: 100%;
-        padding: 12px;
-        border-bottom: 1px solid #ccc;
-
-        &__order-number {
-          width: 5%;
-        }
-      }
-    }
-
-    &__heading {
-      font-weight: bold;
+    &__row {
+      width: 100%;
       padding: 12px;
-      border-bottom: 3px solid #333;
+      border-bottom: 1px solid #ccc;
 
-      &__order-id {
+      &__order-number {
         width: 5%;
       }
     }
+  }
 
-    .product {
-      width: 19%;
-    }
+  &__heading {
+    font-weight: bold;
+    padding: 12px;
+    border-bottom: 3px solid #333;
 
-    select {
-      padding: 12px 6px;
-      margin-right: 12px;
-    }
-
-    &__button {
-      font-size: 16px;
-      font-weight: bold;
-      margin: 0 auto;
-      padding: 10px;
-      color: $tertiary;
-      background-color: #333;
-      border: 2px solid $primary;
-      cursor: pointer;
-      transition: .5s;
-
-      &:hover {
-        background-color: transparent;
-        color: $primary;
-      }
+    &__order-id {
+      width: 5%;
     }
   }
+
+  .product {
+    width: 19%;
+  }
+
+  select {
+    padding: 12px 6px;
+    margin-right: 12px;
+  }
+
+  &__button {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 10px;
+    color: $tertiary;
+    background-color: #333;
+    border: 2px solid $primary;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:hover {
+      background-color: transparent;
+      color: $primary;
+    }
+  }
+}
 </style>

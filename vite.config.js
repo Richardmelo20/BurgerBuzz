@@ -14,7 +14,7 @@ export default defineConfig({
   },
   base: './', // Faz com que os caminhos dos arquivos sejam relativos
   build: {
-    outDir: 'dist',
+    outDir: 'dist'
   },
   // css: ['./assets/scss/_global.scss'],
   css: {
