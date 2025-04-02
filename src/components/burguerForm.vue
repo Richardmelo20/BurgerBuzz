@@ -109,7 +109,7 @@ export default {
   methods: {
     async getIngredientes() {
       try {
-        const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/ingredientes');
+        const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/ingredientes'); 
         
         if (!req.ok) {
           throw new Error(`Erro na requisição: ${req.status} ${req.statusText}`);
