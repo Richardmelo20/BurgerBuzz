@@ -80,7 +80,6 @@ export default {
         }
 
         const data = await req.json();
-        console.log('Dados recebidos:', data);
 
         // Filtrando ingredientes por categoria
         this.paes = data.filter((item) => item.categoria === 'pao');

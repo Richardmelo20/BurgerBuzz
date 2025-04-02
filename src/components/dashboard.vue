@@ -1,6 +1,7 @@
 <template>
   <div class="table">
     <message v-show="msg" :msg="msg" />
+
     <div>
       <div class="table__heading">
         <div class="table__heading__order-id">#</div>
@@ -11,6 +12,7 @@
         <div class="product">Ações:</div>
       </div>
     </div>
+
     <div class="table__rows">
       <div v-for="burger in burgers" :key="burger.id" class="table__rows__row">
         <div class="table__rows__row__order-number">
@@ -33,16 +35,10 @@
           </ul>
         </div>
         <div class="product">
-          <select name="status" class="table__status" @change="updateBurger($event, burger.id)">
-            <option value="">Selecionar</option>
-            <option
-              v-for="s in status"
-              :key="s.id"
-              :value="s.tipo"
-              :selected="burger.status == s.tipo"
-            >
-              {{ s.tipo }}
-            </option>
+          <select v-model="burger.status" class="table__status" @change="updateBurger(burger)">
+            <option value="Solicitado">Solicitado</option>
+            <option value="Em Produção">Em Produção</option>
+            <option value="Finalizado">Finalizado</option>
           </select>
           <button class="table__button" @click="deleteBurger(burger.id)">Cancelar</button>
         </div>
@@ -62,9 +58,7 @@ export default {
 
   data() {
     return {
-      burgers: null,
-      burger_id: null,
-      status: [],
+      burgers: [], // Inicializando como array vazio
       msg: null
     };
   },
@@ -75,54 +69,54 @@ export default {
 
   methods: {
     async getPedidos() {
-      const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/burgers/');
-      const data = await req.json();
-      this.burgers = data;
+      try {
+        const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/burgers/');
+        if (!req.ok) throw new Error('Erro ao buscar pedidos');
 
-      this.getStatus();
+        this.burgers = await req.json();
+      } catch (error) {
+        console.error('Erro ao buscar pedidos:', error);
+      }
     },
-    async getStatus() {
-      const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/status');
-      const data = await req.json();
-      this.status = data;
-    },
+
     async deleteBurger(id) {
-      const req = await fetch(`https://67ed707f4387d9117bbda35a.mockapi.io/burgers/${id}`, {
-        method: 'DELETE'
-      });
+      try {
+        const req = await fetch(`https://67ed707f4387d9117bbda35a.mockapi.io/burgers/${id}`, {
+          method: 'DELETE'
+        });
 
-      const res = await req.json();
+        if (!req.ok) throw new Error('Erro ao deletar pedido');
 
-      console.log(res);
+        this.msg = 'Pedido removido com sucesso';
+        setTimeout(() => (this.msg = ''), 3000);
 
-      this.msg = 'Pedido removido com sucesso';
-
-      setTimeout(() => {
-        this.msg = '';
-      }, 3000);
-
-      this.getPedidos();
+        // Removendo o item do array localmente sem precisar recarregar a API
+        this.burgers = this.burgers.filter((burger) => burger.id !== id);
+      } catch (error) {
+        console.error('Erro ao deletar pedido:', error);
+      }
     },
-    async updateBurger(event, id) {
-      const option = event.target.value;
 
-      const dataJson = JSON.stringify({ status: option });
+    async updateBurger(burger) {
+      try {
+        const req = await fetch(
+          `https://67ed707f4387d9117bbda35a.mockapi.io/burgers/${burger.id}`,
+          {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: burger.status })
+          }
+        );
 
-      const req = await fetch(`https://67ed707f4387d9117bbda35a.mockapi.io/burgers/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: dataJson
-      });
+        if (!req.ok) throw new Error(`Erro ao atualizar status: ${req.status}`);
 
-      const res = await req.json();
+        const res = await req.json();
 
-      console.log(res);
-
-      this.msg = `O pedido Nº ${res.id} foi atualizado para ${res.status}`;
-
-      setTimeout(() => {
-        this.msg = '';
-      }, 3000);
+        this.msg = `O pedido Nº ${res.id} foi atualizado para ${res.status}`;
+        setTimeout(() => (this.msg = ''), 3000);
+      } catch (error) {
+        console.error('Erro ao atualizar status:', error);
+      }
     }
   }
 };
@@ -174,15 +168,15 @@ export default {
     font-weight: bold;
     margin: 0 auto;
     padding: 10px;
-    color: $tertiary;
+    color: #fff;
     background-color: #333;
-    border: 2px solid $primary;
+    border: 2px solid #ffa500;
     cursor: pointer;
     transition: 0.5s;
 
     &:hover {
       background-color: transparent;
-      color: $primary;
+      color: #ffa500;
     }
   }
 }
