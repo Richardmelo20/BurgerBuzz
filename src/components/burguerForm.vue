@@ -109,8 +109,8 @@ export default {
   methods: {
     async getIngredientes() {
       try {
-        const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/ingredientes'); 
-        
+        const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/ingredientes');
+
         if (!req.ok) {
           throw new Error(`Erro na requisição: ${req.status} ${req.statusText}`);
         }
@@ -118,9 +118,10 @@ export default {
         const data = await req.json();
         console.log('Dados recebidos:', data);
 
-        this.paes = data.paes; 
-        this.carnes = data.carnes;
-        this.opcionaisdata = data.opcionais;
+        // Filtrando ingredientes por categoria
+        this.paes = data.filter(item => item.categoria === 'pao');
+        this.carnes = data.filter(item => item.categoria === 'carne');
+        this.opcionaisdata = data.filter(item => item.categoria === 'opcional');
       } catch (error) {
         console.error('Erro ao buscar ingredientes:', error);
       }
@@ -130,39 +131,45 @@ export default {
       e.preventDefault();
 
       const data = {
-        name : this.name,
+        name: this.name,
         carne: this.carne,
         pao: this.pao,
-        opcionais: Array.from(this.opcionais),
+        opcionais: this.opcionais,  // Não precisa do `Array.from()`
         status: 'Solicitado'
       };
 
-      const dataJson = JSON.stringify(data);
+      try {
+        const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/burgers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
 
-      const req = await fetch('https://67ed707f4387d9117bbda35a.mockapi.io/burgers', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: dataJson
-      });
+        if (!req.ok) {
+          throw new Error(`Erro ao criar pedido: ${req.status} ${req.statusText}`);
+        }
 
-      const res = await req.json();
-  
-      this.msg = `Pedido Nº ${res.id} realizado com sucesso`;
-      console.log('Mensagem definida:', this.msg);
+        const res = await req.json();
+        this.msg = `Pedido Nº ${res.id} realizado com sucesso`;
+        console.log('Mensagem definida:', this.msg);
 
-      setTimeout(() => {
-        this.msg = '';
-      }, 3000);
+        setTimeout(() => {
+          this.msg = '';
+        }, 3000);
 
-      this.name = '';
-      this.carne = '';
-      this.pao = '';
-      this.opcionais = [];
+        // Resetando os campos do formulário
+        this.name = '';
+        this.carne = '';
+        this.pao = '';
+        this.opcionais = [];
 
-      console.log('Campos resetados:', this.name, this.carne, this.pao, this.opcionais);
-
+        console.log('Campos resetados:', this.name, this.carne, this.pao, this.opcionais);
+      } catch (error) {
+        console.error('Erro ao criar burger:', error);
+      }
     }
   },
+
   mounted() {
     this.getIngredientes();
   }
