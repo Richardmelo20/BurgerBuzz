@@ -29,7 +29,7 @@ export default {
   margin: 30px auto;
 
   &__message {
-    font-size: clamp(1em, 1vw, 1.2em);
+    font-size: clamp(0.5em, 1vw, 1em);
   }
 }
 </style>
